@@ -2,10 +2,8 @@
     <div class="pt-0 lg:pt-0 lg:py-14 pb-3 lg:pb-3">
         <div
             class="w-full flex flex-col bg-white border border-gray-200 shadow-sm rounded-[20px] p-0 relative transition-transform duration-200 overflow-hidden">
-            <!-- Картинка с оверлеями -->
             <div
                 class="relative w-full aspect-[2/1] bg-gray-100 rounded-t-[20px] overflow-hidden flex items-center justify-center">
-                <!-- Верхние бейджи и избранное -->
                 <div class="absolute top-4 left-4 flex gap-2 z-10">
                     <span
                         v-if="property.developer_verified"
@@ -24,15 +22,12 @@
                             d="M16.5 6.75a4.5 4.5 0 00-6.364 0l-.386.386-.386-.386a4.5 4.5 0 10-6.364 6.364l.386.386L12 21.75l8.25-8.25.386-.386a4.5 4.5 0 000-6.364z" />
                     </svg>
                 </button>
-                <!-- Фото или иконка -->
                 <img :src="formattedImageUrl" :alt="property.title" class="object-cover w-full h-full" />
-                <!-- Цена -->
                 <div class="absolute left-4 bottom-4 bg-white shadow rounded-xl p-3 flex flex-col items-start">
                     <div class="text-2xl font-bold">{{ formatPrice(property.price) }} {{ property.currency }}</div>
                     <div class="text-xs text-gray-400">{{ formatPrice(property.price_per_sqm) }} {{ property.currency }}/м²</div>
                 </div>
             </div>
-            <!-- Инфоблок -->
             <div class="flex flex-col h-48 gap-2 p-4 justify-between">
                 <div class="text-sm text-gray-500 flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -130,7 +125,6 @@ const isFavorite = ref(false)
 
 const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value
-  // Here you could also make an API call to update the favorite status
 }
 
 const formatPrice = (price) => {
@@ -140,9 +134,8 @@ const formatPrice = (price) => {
 }
 
 const isGoodPrice = computed(() => {
-  // Logic to determine if the price is good (you can customize this)
   const pricePerSqm = parseFloat(props.property.price_per_sqm)
-  return pricePerSqm > 0 && pricePerSqm < 200000 // Example threshold
+  return pricePerSqm > 0 && pricePerSqm < 200000
 })
 
 const formattedImageUrl = computed(() => {
@@ -150,13 +143,11 @@ const formattedImageUrl = computed(() => {
   
   const imageUrl = props.property.main_image_url
   
-  // Если URL уже полный (начинается с http/https), возвращаем как есть
   if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
     return imageUrl
   }
   
-  // Если URL относительный, добавляем базовый URL из API store
-  const baseUrl = apiStore.url.replace(/\/$/, '') // Убираем trailing slash если есть
+  const baseUrl = apiStore.url.replace(/\/$/, '')
   return `${baseUrl}${imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`}`
 })
 </script>

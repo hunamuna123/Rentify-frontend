@@ -8,23 +8,6 @@
 				<template v-else-if="productData">
 					<CatalogProductCarousel :product="productData" />
 					<CatalogProductValue :product="productData" />
-					<div v-if="productData.developer" class="mt-6">
-						<NuxtLink
-							:to="`/developers/${productData.developer.id}`"
-							class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium"
-						>
-							<img
-								v-if="productData.developer.logo_url"
-								:src="getFullImageUrl(productData.developer.logo_url)"
-								:alt="productData.developer.company_name"
-								class="w-8 h-8 rounded-full object-cover"
-							/>
-							<span>{{ productData.developer.company_name }}</span>
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-							</svg>
-						</NuxtLink>
-					</div>
 				</template>
 				<template v-else>
 					<div class="w-full text-center py-8">
@@ -73,7 +56,6 @@ onMounted(async () => {
 	if (!product.value) {
 		refresh()
 	}
-	// Инициализируем Preline после загрузки компонента
 	await nextTick()
 	if (typeof window !== 'undefined' && window.HSStaticMethods) {
 		window.HSStaticMethods.autoInit()
@@ -83,7 +65,6 @@ onMounted(async () => {
 watchEffect(async () => {
 	if (product.value) {
 		productData.value = product.value
-		// Переинициализируем Preline после обновления данных
 		await nextTick()
 		if (typeof window !== 'undefined' && window.HSStaticMethods) {
 			setTimeout(() => {

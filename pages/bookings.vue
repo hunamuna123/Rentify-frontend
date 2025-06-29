@@ -172,7 +172,6 @@ const totalPages = ref(1)
 const totalItems = ref(0)
 const error = ref(null)
 
-// Функция для получения актуальных токенов
 const getAuthHeaders = () => {
   const accessToken = useCookie('access_token')
   const headers = {
@@ -186,7 +185,6 @@ const getAuthHeaders = () => {
   return headers
 }
 
-// Функция для обновления токенов
 const refreshTokens = async () => {
   const refreshToken = useCookie('refresh_token')
   const accessToken = useCookie('access_token')
@@ -221,7 +219,6 @@ const refreshTokens = async () => {
   }
 }
 
-// Функция для выполнения запроса с автоматическим обновлением токенов
 const makeAuthenticatedRequest = async (url, options = {}) => {
   let headers = getAuthHeaders()
   
@@ -232,7 +229,6 @@ const makeAuthenticatedRequest = async (url, options = {}) => {
   
   let response = await fetch(url, requestOptions)
   
-  // Если получили 401, пробуем обновить токены и повторить запрос
   if (response.status === 401) {
     const refreshed = await refreshTokens()
     if (refreshed) {
@@ -240,7 +236,6 @@ const makeAuthenticatedRequest = async (url, options = {}) => {
       requestOptions.headers = { ...headers, ...options.headers }
       response = await fetch(url, requestOptions)
     } else {
-      // Если не удалось обновить токены, перенаправляем на логин
       const accessToken = useCookie('access_token')
       const refreshToken = useCookie('refresh_token')
       accessToken.value = null
@@ -271,14 +266,11 @@ const fetchBookings = async () => {
 
     const data = await response.json()
     
-    // Проверяем структуру ответа
     if (Array.isArray(data)) {
-      // Если API возвращает простой массив
       bookings.value = data
       totalPages.value = 1
       totalItems.value = data.length
     } else if (data.results && Array.isArray(data.results)) {
-      // Если API возвращает объект с results и пагинацией
       bookings.value = data.results
       if (data.pagination) {
         currentPage.value = data.pagination.page || 1
@@ -286,7 +278,6 @@ const fetchBookings = async () => {
         totalItems.value = data.pagination.total || data.results.length
       }
     } else {
-      // Если API возвращает объект с данными напрямую
       bookings.value = data.bookings || data.items || []
       if (data.pagination) {
         currentPage.value = data.pagination.page || 1
@@ -322,7 +313,6 @@ const cancelBooking = async (bookingId) => {
       throw new Error(`Ошибка при отмене бронирования: ${response.status}`)
     }
 
-    // Обновляем список бронирований
     await fetchBookings()
     alert('Бронирование успешно отменено')
   } catch (error) {
@@ -383,7 +373,6 @@ onMounted(() => {
   fetchBookings()
 })
 
-// Следим за изменениями в query параметрах
 watch(() => route.query.page, (newPage) => {
   if (newPage) {
     currentPage.value = parseInt(newPage)

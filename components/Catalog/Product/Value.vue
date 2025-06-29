@@ -246,6 +246,15 @@
 						<span class="text-xs text-gray-500 ml-1">{{ product.developer.rating }}</span>
 						<span v-if="product.developer.is_verified" class="text-xs text-green-600 ml-2">✓ Проверен</span>
 					</div>
+					<NuxtLink
+						:to="`/developers/${product.developer.id}`"
+						class="inline-flex items-center gap-1 mt-1 text-xs text-blue-600 hover:text-blue-700 font-medium"
+					>
+						<span>Перейти к застройщику</span>
+						<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</NuxtLink>
 				</div>
 			</div>
 			

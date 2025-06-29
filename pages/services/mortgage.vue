@@ -199,7 +199,6 @@ const overpayment = computed(() => {
 })
 
 const calculateMortgage = () => {
-  // Расчет уже происходит автоматически через computed
 }
 
 const formatCurrency = (amount) => {

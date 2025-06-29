@@ -106,7 +106,6 @@ const handleSearch = () => {
         query.type = propertyType.value;
     }
     
-    // Переход на страницу каталога с параметрами поиска
     router.push({
         path: '/catalog',
         query: query

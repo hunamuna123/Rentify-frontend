@@ -90,7 +90,6 @@
               class="mt-1 w-full border rounded-md px-3 py-2 focus:outline-none border-blue-200 focus:border-blue-300" />
           </div>
 
-          <!-- Read-only fields -->
           <div v-if="!loading" class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-black">Телефон</label>
@@ -201,7 +200,6 @@ export default {
           },
         });
         console.log('Profile updated:', response.data);
-        // Refresh profile data after update
         await this.fetchProfile();
       } catch (error) {
         console.error('Error updating profile:', error);

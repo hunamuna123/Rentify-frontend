@@ -58,7 +58,6 @@ const leaveAccount = () => {
 }
 
 onMounted(() => {
-  // Инициализируем Preline dropdown
   if (typeof window !== 'undefined' && window.HSStaticMethods) {
     window.HSStaticMethods.autoInit()
   }

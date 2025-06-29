@@ -1,7 +1,6 @@
 <template>
 	<div class="w-full md:max-w-[calc(50%_-_48px)] lg:max-w-[calc(40%_-_48px)]">
 		<div class="relative">
-			<!-- Main Image -->
 			<div class="aspect-square bg-gray-100 rounded-xl overflow-hidden">
 				<img v-if="currentImage" 
 					:src="currentImage" 
@@ -14,7 +13,6 @@
 				</div>
 			</div>
 
-			<!-- Navigation Arrows -->
 			<button v-if="images.length > 1" @click="previousImage"
 				class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-2 rounded-full shadow-lg transition-all duration-200"
 				aria-label="Предыдущее изображение">
@@ -30,13 +28,11 @@
 				</svg>
 			</button>
 
-			<!-- Image Counter -->
 			<div v-if="images.length > 1" class="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
 				{{ currentIndex + 1 }} / {{ images.length }}
 			</div>
 		</div>
 
-		<!-- Thumbnail Navigation -->
 		<div v-if="images.length > 1" class="mt-4 flex gap-2 overflow-x-auto">
 			<button v-for="(image, index) in images" :key="index"
 				@click="currentIndex = index"
@@ -65,32 +61,25 @@ const props = defineProps({
 const apiStore = api()
 const currentIndex = ref(0)
 
-// Создаем массив изображений из продукта
 const images = computed(() => {
 	const imageArray = []
 	
-	// Обрабатываем изображения из нового API формата
 	if (props.product?.images && Array.isArray(props.product.images)) {
-		// Изображения приходят как объекты с полем url
 		imageArray.push(...props.product.images.map(img => {
 			if (!img.url) return null
 			
-			// Если URL уже полный (начинается с http), используем как есть
 			if (img.url.startsWith('http://') || img.url.startsWith('https://')) {
 				return img.url
 			}
 			
-			// Если URL относительный (начинается с /), добавляем базовый URL API
 			if (img.url.startsWith('/')) {
 				return `${apiStore.url}${img.url.substring(1)}`
 			}
 			
-			// Если URL без слеша, добавляем базовый URL API со слешем
 			return `${apiStore.url}${img.url}`
-		}).filter(url => url !== null)) // Убираем null значения
+		}).filter(url => url !== null))
 	}
 	
-	// Если нет изображений, возвращаем пустой массив
 	return imageArray
 })
 
@@ -110,7 +99,6 @@ const previousImage = () => {
 	}
 }
 
-// Сбрасываем индекс при изменении продукта
 watch(() => props.product, () => {
 	currentIndex.value = 0
 }, { deep: true })

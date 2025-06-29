@@ -394,17 +394,14 @@
 import { ref, computed, onMounted } from 'vue'
 import { api as useApiStore } from "@/store/api";
 
-// Store
 const apiStore = useApiStore()
 
-// Reactive data
 const loading = ref(false)
 const recommendations = ref([])
 const sortBy = ref('relevance')
 const isAuthenticated = ref(false)
 const authLoading = ref(true)
 
-// Form data
 const form = ref({
   budget_min: '',
   budget_max: '',
@@ -417,7 +414,6 @@ const form = ref({
   must_have_features: []
 })
 
-// Loading steps
 const loadingSteps = ref([
   { text: 'Анализируем ваши предпочтения', completed: false },
   { text: 'Изучаем рынок недвижимости', completed: false },
@@ -425,7 +421,6 @@ const loadingSteps = ref([
   { text: 'Рассчитываем релевантность', completed: false }
 ])
 
-// Computed
 const sortedRecommendations = computed(() => {
   if (!recommendations.value.length) return []
   
@@ -441,7 +436,6 @@ const sortedRecommendations = computed(() => {
   })
 })
 
-// Methods
 const toggleRoom = (room) => {
   const index = form.value.rooms_count.indexOf(room)
   if (index > -1) {
@@ -466,14 +460,11 @@ const getRecommendations = async () => {
   loading.value = true
   recommendations.value = []
   
-  // Reset loading steps
   loadingSteps.value.forEach(step => step.completed = false)
   
   try {
-    // Simulate loading steps
     simulateLoadingSteps()
     
-    // Prepare request data
     const requestData = {
       budget_min: parseInt(form.value.budget_min) || 0,
       budget_max: parseInt(form.value.budget_max) || 0,
@@ -486,7 +477,6 @@ const getRecommendations = async () => {
       must_have_features: form.value.must_have_features
     }
 
-    // Get auth tokens
     const accessToken = useCookie('access_token')
     const refreshToken = useCookie('refresh_token')
     
@@ -494,12 +484,10 @@ const getRecommendations = async () => {
       'Content-Type': 'application/json',
     }
     
-    // Add authorization header if token exists
     if (accessToken.value) {
       headers['Authorization'] = `Bearer ${accessToken.value}`
     }
     
-    // Make API call
     const response = await fetch(`${apiStore.url}api/v1/ai/recommend-properties`, {
       method: 'POST',
       headers,
@@ -508,7 +496,6 @@ const getRecommendations = async () => {
     
     if (!response.ok) {
       if (response.status === 401) {
-        // Unauthorized - redirect to login
         console.error('Unauthorized access')
         navigateTo('/auth/login')
         return
@@ -519,10 +506,8 @@ const getRecommendations = async () => {
     const data = await response.json()
     console.log('API Response:', data)
     
-    // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 1000))
     
-    // Use mock data for demonstration
     recommendations.value = [
       {
         id: 1,
@@ -568,28 +553,32 @@ const getRecommendations = async () => {
   }
 }
 
-// Check authentication
 const checkAuth = () => {
   const accessToken = useCookie('access_token')
   const refreshToken = useCookie('refresh_token')
   isAuthenticated.value = !!(accessToken.value || refreshToken.value)
   
   if (!isAuthenticated.value) {
-    // Redirect to login if not authenticated
     navigateTo('/auth/login')
   }
   
   authLoading.value = false
 }
 
-// Lifecycle
 onMounted(() => {
-  // Check authentication first
   checkAuth()
   
-  // Initialize form with default values
-  form.value.rooms_count = [1, 2]
-  form.value.must_have_features = ['Парковка']
+  form.value = {
+    budget_min: '',
+    budget_max: '',
+    property_type: '',
+    rooms_count: [],
+    urgency_level: 'medium',
+    min_area: '',
+    max_area: '',
+    preferred_regions: null,
+    must_have_features: []
+  }
 })
 </script>
 
