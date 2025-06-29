@@ -65,17 +65,24 @@
       </div>
       <div v-else-if="activeTab === 'complexes'">
         <h2 class="text-xl font-semibold mb-4">ЖК</h2>
-        <div v-if="complexes.length === 0" class="text-gray-400">Нет активных ЖК.</div>
+        <div v-if="isComplexesLoading" class="text-gray-400">Загрузка...</div>
+        <div v-else-if="complexesError" class="text-red-500">{{ complexesError }}</div>
+        <div v-else-if="complexes.length === 0" class="text-gray-400">Нет активных ЖК.</div>
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div v-for="complex in complexes" :key="complex.id" class="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-3 shadow hover:shadow-lg transition">
-            <div class="text-gray-900 font-medium mt-2">{{ complex.title }}</div>
-            <div class="text-gray-500 text-sm">{{ complex.district }}, {{ complex.city }}</div>
-            <div class="flex items-center gap-3 text-xs text-gray-500 mt-2">
-              <span>🛏 {{ complex.rooms_count }}</span>
-              <span>🛁 {{ complex.bathrooms_count }}</span>
-              <span>📐 {{ complex.total_area }} м²</span>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-700">{{ complex.status }}</span>
             </div>
-            <NuxtLink :to="`/catalog/${complex.id}`" class="mt-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">Подробнее</NuxtLink>
+            <div class="text-lg font-bold">{{ complex.name }}</div>
+            <div class="text-gray-500 text-sm">{{ complex.city }}, {{ complex.address }}</div>
+            <div class="flex flex-wrap gap-4 text-sm text-gray-500 mt-2">
+              <span>Старт: <b class="text-gray-900">{{ formatDate(complex.construction_start_date) }}</b></span>
+              <span>Сдача: <b class="text-gray-900">{{ formatDate(complex.planned_completion_date) }}</b></span>
+            </div>
+            <div class="text-sm text-gray-700 mt-2">
+              Цена: <b>{{ formatPrice(complex.price_from) }} ₽</b>
+              <span v-if="complex.price_to">– <b>{{ formatPrice(complex.price_to) }} ₽</b></span>
+            </div>
           </div>
         </div>
       </div>
@@ -191,7 +198,8 @@ const fetchComplexes = async () => {
   try {
     const res = await fetch(`${apiStore.url}api/v1/developers/public/${route.params.id}/complexes`)
     if (!res.ok) throw new Error('Ошибка загрузки комплексов')
-    complexes.value = await res.json()
+    const data = await res.json()
+    complexes.value = Array.isArray(data.items) ? data.items : []
   } catch (e) {
     complexesError.value = e.message
     complexes.value = []
