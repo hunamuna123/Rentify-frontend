@@ -6,24 +6,37 @@
                     class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b border-gray-300-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none active"
                     id="tabs-with-icons-item-1" aria-selected="true" data-hs-tab="#tabs-with-icons-1"
                     aria-controls="tabs-with-icons-1" role="tab">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
                     Характеристики
                 </button>
                 <button type="button"
                     class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b border-gray-300-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none"
                     id="tabs-with-icons-item-2" aria-selected="false" data-hs-tab="#tabs-with-icons-2"
                     aria-controls="tabs-with-icons-2" role="tab">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                    </svg>
                     Описание
                 </button>
                 <button type="button"
                     class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b border-gray-300-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none"
                     id="tabs-with-icons-item-3" aria-selected="false" data-hs-tab="#tabs-with-icons-3"
                     aria-controls="tabs-with-icons-3" role="tab">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
                     Расположение
                 </button>
                 <button type="button"
                     class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b border-gray-300-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none"
                     id="tabs-with-icons-item-4" aria-selected="false" data-hs-tab="#tabs-with-icons-4"
                     aria-controls="tabs-with-icons-4" role="tab">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>
                     Удобства
                 </button>
             </div>
@@ -93,17 +106,128 @@
     </div>
 
     <div id="tabs-with-icons-3" class="hidden" role="tabpanel" aria-labelledby="tabs-with-icons-item-3">
-        <div class="flex flex-col gap-2 text-md">
-            <p><strong>Адрес:</strong> {{ product?.full_address || 'Не указан' }}</p>
-            <p><strong>Город:</strong> {{ product?.city || 'Не указан' }}</p>
-            <p><strong>Район:</strong> {{ product?.district || 'Не указан' }}</p>
-            <p><strong>Улица:</strong> {{ product?.street || 'Не указана' }}</p>
-            <p><strong>Дом:</strong> {{ product?.house_number || 'Не указан' }}</p>
-            <p><strong>Квартира:</strong> {{ product?.apartment_number || 'Не указана' }}</p>
-            <p><strong>Индекс:</strong> {{ product?.postal_code || 'Не указан' }}</p>
-            <p v-if="product?.latitude && product?.longitude">
-                <strong>Координаты:</strong> {{ product.latitude }}, {{ product.longitude }}
-            </p>
+        <div class="space-y-6">
+            <!-- Информация о расположении -->
+            <div class="bg-gray-50 rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Информация о расположении
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="flex flex-col gap-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Адрес:</span>
+                            <span class="font-medium">{{ product?.full_address || 'Не указан' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Город:</span>
+                            <span class="font-medium">{{ product?.city || 'Не указан' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Район:</span>
+                            <span class="font-medium">{{ product?.district || 'Не указан' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Улица:</span>
+                            <span class="font-medium">{{ product?.street || 'Не указана' }}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Дом:</span>
+                            <span class="font-medium">{{ product?.house_number || 'Не указан' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Квартира:</span>
+                            <span class="font-medium">{{ product?.apartment_number || 'Не указана' }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Индекс:</span>
+                            <span class="font-medium">{{ product?.postal_code || 'Не указан' }}</span>
+                        </div>
+                        <div v-if="product?.latitude && product?.longitude" class="flex justify-between">
+                            <span class="text-gray-600">Координаты:</span>
+                            <span class="font-medium text-blue-600">{{ product.latitude }}, {{ product.longitude }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карта -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Переключатель режимов карты -->
+                <div class="flex justify-center p-4 bg-gradient-to-r from-gray-50 to-blue-50">
+                    <div class="bg-white rounded-xl shadow-lg p-2 border border-gray-200">
+                        <div class="flex gap-2">
+                            <button 
+                                @click="mapMode = '2d'"
+                                class="px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2"
+                                :class="mapMode === '2d' 
+                                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
+                                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                                </svg>
+                                2D Карта
+                            </button>
+                            <button 
+                                @click="mapMode = '3d'"
+                                class="px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2"
+                                :class="mapMode === '3d' 
+                                    ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-lg' 
+                                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                                3D Карта
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Отображение выбранной карты -->
+                <div class="transition-all duration-300">
+                    <template v-if="mapMode === '2d'">
+                        <CatalogProductMap :product="product" />
+                    </template>
+                    <template v-else>
+                        <CatalogProductMap3D :product="product" />
+                    </template>
+                </div>
+            </div>
+
+            <!-- Дополнительная информация о районе -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    Инфраструктура района
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="flex items-center gap-2 text-sm">
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span>Транспорт</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span>Магазины</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                        <span>Школы</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                        <span>Парки</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -136,7 +260,7 @@
 </template>
 
 <script setup>
-import { onMounted, watch, nextTick } from 'vue'
+import { onMounted, watch, nextTick, ref } from 'vue'
 
 const props = defineProps({
     product: {
@@ -144,6 +268,8 @@ const props = defineProps({
         default: () => ({})
     }
 })
+
+const mapMode = ref('2d') // По умолчанию показываем 2D карту
 
 const getPropertyTypeName = (type) => {
     switch(type) {
